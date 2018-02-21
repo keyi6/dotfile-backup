@@ -128,13 +128,20 @@ let g:ale_sign_column_always = 1
 let g:ale_set_highlights = 0
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '⚠️'
-let g:ale_statusline_format = ['✗ %d', '⚠️ %d', '✔ OK']
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
-let g:airline#extensions#ale#enabled = 1
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-set statusline=%F%m%r%h%w\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}\ %{ALEGetStatusLine()}
-let g:ale_linters = { 'reStructuredText': ['rstcheck'], 'c++': 'clang++', 'markdown': ['mdl'] }
+let g:ale_linters = { 
+\	'c': 'clang', 
+\	'cpp': 'clang', 
+\	'python': ['flake8', 'mypy'],
+\	'javascript': 'jslint',
+\	'make': 'checkmake', 
+\	'php': 'php', 
+\	'sh': 'shellcheck',
+\	'tex': 'chktex', 
+\	'vim': 'vint', 
+\}
 let g:ale_fixers = {'python': ['trim_whitespace', 'autopep8']}
 
 " youcompleteme setting
@@ -143,13 +150,14 @@ autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 inoremap <expr> <CR>	   pumvisible() ? "\<C-y>" : "\<CR>"
 inoremap <expr> <Down>	   pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <Up>	   pumvisible() ? "\<C-p>" : "\<Up>"
-let g:ycm_collect_identifiers_from_tags_files=1
-let g:ycm_min_num_of_chars_for_completion=2
-let g:ycm_seed_identifiers_with_syntax=1
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_min_num_of_chars_for_completion = 2
+let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
 let g:ycm_path_to_python_interpreter = '/usr/local/bin/python3'
 let g:ycm_server_python_interpreter =  '/usr/local/bin/python3'
+let g:ycm_python_binary_path = '/usr/local/bin/python3'
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " airline and airline-theme
@@ -158,6 +166,8 @@ let g:airline_theme = 'bubblegum'
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_section_c = '%<%F%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
-let g:airline#extensions#tabline#tab_nr_type = 1
+let g:airline#extensions#ale#enabled = 1
+call airline#parts#define_function('ALE', 'ALEGetStatusLine')
+call airline#parts#define_condition('ALE', 'exists("*ALEGetStatusLine")')
+let g:airline_section_error = airline#section#create_right(['ALE'])
+
