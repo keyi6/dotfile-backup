@@ -109,6 +109,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'ervandew/supertab'
 Plugin 'w0rp/ale'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
@@ -149,8 +151,18 @@ let g:airline_theme = 'bubblegum'
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
+" airline & ale
 let g:airline#extensions#ale#enabled = 1
 call airline#parts#define_function('ALE', 'ALEGetStatusLine')
 call airline#parts#define_condition('ALE', 'exists("*ALEGetStatusLine")')
 let g:airline_section_error = airline#section#create_right(['ALE'])
 
+" supertab setting
+let g:SuperTabDefaultCompletionType = "context"
+
+" jedi
+let g:jedi#force_py_version=3
+let g:pymode_rope = 0
+let g:jedi#auto_initialization = 0
+autocmd FileType python setlocal completeopt-=preview
+let g:jedi#use_splits_not_buffers = "right"
