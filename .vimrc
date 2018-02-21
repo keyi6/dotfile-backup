@@ -110,7 +110,6 @@ call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'w0rp/ale'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 "Plugin 'tmhedberg/SimpylFold'
@@ -132,8 +131,8 @@ let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_linters = { 
-\	'c': 'clang', 
-\	'cpp': 'clang', 
+\	'c': 'clangcheck', 
+\	'cpp': 'clangcheck', 
 \	'python': ['flake8', 'mypy'],
 \	'javascript': 'jslint',
 \	'make': 'checkmake', 
@@ -143,22 +142,6 @@ let g:ale_linters = {
 \	'vim': 'vint', 
 \}
 let g:ale_fixers = {'python': ['trim_whitespace', 'autopep8']}
-
-" youcompleteme setting
-set completeopt=longest,menu
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-inoremap <expr> <CR>	   pumvisible() ? "\<C-y>" : "\<CR>"
-inoremap <expr> <Down>	   pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <expr> <Up>	   pumvisible() ? "\<C-p>" : "\<Up>"
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_min_num_of_chars_for_completion = 2
-let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_complete_in_comments = 1
-let g:ycm_complete_in_strings = 1
-let g:ycm_path_to_python_interpreter = '/usr/local/bin/python3'
-let g:ycm_server_python_interpreter =  '/usr/local/bin/python3'
-let g:ycm_python_binary_path = '/usr/local/bin/python3'
-let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " airline and airline-theme
 let g:airline_powerline_fonts = 1
