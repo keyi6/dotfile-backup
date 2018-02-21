@@ -1,6 +1,7 @@
 colorscheme ron 
 set hls
 set number
+imap <C-j> <Down> 
 set cindent
 set smartindent
 set autoindent
@@ -16,7 +17,6 @@ set tabstop=4
 set softtabstop=4
 set backspace=2
 set shiftwidth=4
-"set foldmethod=indent
 set encoding=utf-8
 set fileencodings=utf-8,gb2312,gbk,gb18030
 set termencoding=utf-8
@@ -56,6 +56,7 @@ func! CompileOrRun()
 		exec "!php %"
 	elseif &filetype == 'js'
 		exec "!node %"
+
 	endif
 endfunc
 
@@ -64,6 +65,12 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+
+" move in INSERT mode
+imap <C-j> <Down> 
+imap <C-k> <Up>
+imap <C-h> <Left>
+imap <C-l> <Right>
 
 "******************************  Header  ****************************** 
 au BufNewFile *.cpp exec ":call SetCpp()"
@@ -84,11 +91,12 @@ func SetCpp()
 	let l = l + 1 | call setline(l, "")
 	let l = l + 1 | call setline(l, "int main(){")
 	let l = l + 1 | call setline(l, "#ifndef ONLINE_JUDGE")
-	let l = l + 1 | call setline(l, "	 freopen(PRON \".in\", \"r\", stdin);")
-	let l = l + 1 | call setline(l, "	 //freopen(PRON \".out\", \"w\", stdout);")
+	let l = l + 1 | call setline(l, "    freopen(PRON \".in\", \"r\", stdin);")
+	let l = l + 1 | call setline(l, "    //freopen(PRON \".out\", \"w\", stdout);")
 	let l = l + 1 | call setline(l, "#endif")
 	let l = l + 1 | call setline(l, "")
 	let l = l + 1 | call setline(l, "}")
+	exec ":%retab!"
 	exec ":11"
 endfunc
 
@@ -97,6 +105,7 @@ func SetPhp()
 	let l = l + 1 | call setline(l, "<?php")
 	let l = l + 1 | call setline(l, "")
 	let l = l + 1 | call setline(l, "?>")
+	exec ":%retab!"
 	exec ":2"
 endfunc
 
@@ -114,7 +123,7 @@ Plugin 'ervandew/supertab'
 Plugin 'w0rp/ale'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-"Plugin 'tmhedberg/SimpylFold'
+Plugin 'nathanaelkane/vim-indent-guides'
 
 call vundle#end()
 filetype plugin indent on
@@ -166,3 +175,11 @@ let g:pymode_rope = 0
 let g:jedi#auto_initialization = 0
 autocmd FileType python setlocal completeopt-=preview
 let g:jedi#use_splits_not_buffers = "right"
+
+" indent guides
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_start_level = 3
+let g:indent_guides_guide_size = 1
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=lightgrey ctermbg=235
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=lightgrey ctermbg=130
