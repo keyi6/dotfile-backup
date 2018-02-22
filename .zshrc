@@ -56,7 +56,6 @@ plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-export PATH=~/anaconda/bin:$PATH
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -80,18 +79,24 @@ export PATH=~/anaconda/bin:$PATH
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 # aliases
+
 alias bim="mvim -v"
 alias vom="mvim -v"
-alias goAli="ssh root@47.93.197.46"
+alias vin="mvim -v"
+alias vim="mvim -v"
+
 alias gadd="git add ."
-alias gcommit="git commit -m"
+alias gcmt="git commit -m"
+alias gpush="git push -u origin master"
+
 alias py3="python3"
-alias py2="python"
 alias py="python3"
 alias pip3="python3 -m pip"
+
 alias jupter="jupter-notebook"
 alias notebook="jupter-notebook"
 alias jn="jupter-notebook"
+
 alias mysql_cli="mycli -u user"
 alias -s tar="tar -xvf"
 
