@@ -1,7 +1,6 @@
 colorscheme ron 
 set hls
 set number
-imap <C-j> <Down> 
 set cindent
 set smartindent
 set autoindent
@@ -14,6 +13,7 @@ set selection=exclusive
 set t_Co=256
 set selectmode=mouse,key
 set tabstop=4
+set foldmethod=marker
 set softtabstop=4
 set backspace=2
 set shiftwidth=4
@@ -25,13 +25,11 @@ set history=50
 
 let python_highlight_all=1
 syntax on
+filetype plugin on
+filetype indent on
 
 
 "******************************  Shortcut  ****************************** 
-" plugin
-map <F2> :NERDTreeToggle<CR>
-map <F3> : ! gedit % <CR>
-
 " text
 map <C-A> ggVG
 vmap <C-C> :w !pbcopy <CR><CR>
@@ -39,22 +37,23 @@ vmap <C-C> :w !pbcopy <CR><CR>
 " compile and run
 map <F9> : call CompileOrRun()<CR>
 map <F5> : ! time ./%< <CR>
-imap <F5> <ESC>:call CompileCode()<CR>
-vmap <F5> <ESC>:call CompileCode()<CR>
+
+" ONLY FOR OPENCV's unknown errros
+map <F10> : ! g++ $(pkg-config --cflags --libs opencv) % -o %< && time ./%< <CR>
 
 func! CompileOrRun()
 	exec "w"
 	if &filetype == 'c'
-		exec "!gcc % -g -o %< -Wall"
+		exec "!g++ % -g -o %< -Wall"
 	elseif &filetype == 'cpp'
-		exec "!gcc % -g -o %< -Wall"
+		exec "!g++ % -g -o %< -Wall -std=c++11"
 	elseif &filetype == 'sh'
-		:!time bash %
+		exec "!./%"
 	elseif &filetype == 'python'
 		exec "!python3 %"
 	elseif &filetype == 'php'
 		exec "!php %"
-	elseif &filetype == 'js'
+	elseif &filetype == 'javascript'
 		exec "!node %"
 
 	endif
@@ -75,6 +74,7 @@ imap <C-l> <Right>
 "******************************  Header  ****************************** 
 au BufNewFile *.cpp exec ":call SetCpp()"
 au BufNewFile *.php exec ":call SetPhp()"
+au BufNewFile *.sh exec ":call SetSh()"
 
 func SetCpp()
 	let l = 0
@@ -89,7 +89,7 @@ func SetCpp()
 	let l = l + 1 | call setline(l, "typedef long long ll;")
 	let l = l + 1 | call setline(l, "")
 	let l = l + 1 | call setline(l, "")
-	let l = l + 1 | call setline(l, "int main(){")
+	let l = l + 1 | call setline(l, "int main() {")
 	let l = l + 1 | call setline(l, "#ifndef ONLINE_JUDGE")
 	let l = l + 1 | call setline(l, "    freopen(PRON \".in\", \"r\", stdin);")
 	let l = l + 1 | call setline(l, "    //freopen(PRON \".out\", \"w\", stdout);")
@@ -109,6 +109,11 @@ func SetPhp()
 	exec ":2"
 endfunc
 
+func SetSh()
+	let l = 0
+	let l = l + 1 | call setline(l, "#!/bin/bash")
+endfunc
+
 
 "******************************  Plugin  ****************************** 
 set nocompatible			  " be iMproved, required
@@ -124,12 +129,11 @@ Plugin 'w0rp/ale'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'godlygeek/tabular'
 
 call vundle#end()
 filetype plugin indent on
 
-" SimpylFold setting
-"let g:SimpylFold_docstring_preview=1
 
 " ale setting
 highlight clear ALEErrorSign
@@ -170,16 +174,14 @@ let g:airline_section_error = airline#section#create_right(['ALE'])
 let g:SuperTabDefaultCompletionType = "context"
 
 " jedi
-let g:jedi#force_py_version=3
 let g:pymode_rope = 0
 let g:jedi#auto_initialization = 0
-autocmd FileType python setlocal completeopt-=preview
 let g:jedi#use_splits_not_buffers = "right"
+autocmd FileType python setlocal completeopt-=preview
 
 " indent guides
 let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_start_level = 3
+let g:indent_guides_start_level = 4
 let g:indent_guides_guide_size = 1
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=lightgrey ctermbg=235
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=lightgrey ctermbg=130
