@@ -130,6 +130,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'godlygeek/tabular'
+Plugin 'chr4/nginx.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -140,8 +141,8 @@ highlight clear ALEErrorSign
 highlight clear ALEWarningSign
 let g:ale_sign_column_always = 1
 let g:ale_set_highlights = 0
-let g:ale_sign_error = '✗'
-let g:ale_sign_warning = '⚠️'
+let g:ale_sign_error = 'x'
+let g:ale_sign_warning = 'w'
 let g:ale_echo_msg_error_str = 'E'
 let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
@@ -160,7 +161,7 @@ let g:ale_fixers = {'python': ['trim_whitespace', 'autopep8']}
 
 " airline and airline-theme
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'bubblegum'
+let g:airline_theme = 'badcat'
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
