@@ -7,7 +7,9 @@ set autoindent
 set showmatch
 set showcmd
 set autoread
+set relativenumber
 set noexpandtab
+set cursorline
 
 set selection=exclusive
 set t_Co=256
@@ -23,11 +25,13 @@ set termencoding=utf-8
 set fileformats=unix
 set history=50
 
-let python_highlight_all=1
+"let python_highlight_all=1
 syntax on
 filetype plugin on
 filetype indent on
 
+au VimEnter * highlight CursorLine cterm=NONE ctermbg=black ctermfg=NONE guibg=NONE guifg=NONE
+set pythonthreedll=/usr/local/Cellar/python/3.7.7/Frameworks/Python.framework/Versions/3.7/lib/libpython3.7.dylib
 
 "******************************  Shortcut  ****************************** 
 " text
@@ -38,15 +42,12 @@ vmap <C-C> :w !pbcopy <CR><CR>
 map <F9> : call CompileOrRun()<CR>
 map <F5> : ! time ./%< <CR>
 
-" ONLY FOR OPENCV's unknown errros
-map <F10> : ! g++ $(pkg-config --cflags --libs opencv) % -o %< && time ./%< <CR>
-
 func! CompileOrRun()
 	exec "w"
 	if &filetype == 'c'
 		exec "!g++ % -g -o %< -Wall"
 	elseif &filetype == 'cpp'
-		exec "!g++ % -g -o %< -Wall -std=c++11"
+		exec "!g++ % -g -o %< -Wall"
 	elseif &filetype == 'sh'
 		exec "!./%"
 	elseif &filetype == 'python'
@@ -123,62 +124,31 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
-Plugin 'w0rp/ale'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'godlygeek/tabular'
-Plugin 'chr4/nginx.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'tell-k/vim-autopep8'
+Plugin 'davidhalter/jedi-vim'
 
 call vundle#end()
 filetype plugin indent on
 
-
-" ale setting
-highlight clear ALEErrorSign
-highlight clear ALEWarningSign
-let g:ale_sign_column_always = 1
-let g:ale_set_highlights = 0
-let g:ale_sign_error = 'x'
-let g:ale_sign_warning = 'w'
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-let g:ale_linters = { 
-\	'c': 'clangcheck', 
-\	'cpp': 'clangcheck', 
-\	'python': ['flake8', 'mypy'],
-\	'javascript': 'jslint',
-\	'make': 'checkmake', 
-\	'php': 'php', 
-\	'sh': 'shellcheck',
-\	'tex': 'chktex', 
-\	'vim': 'vint', 
-\}
-let g:ale_fixers = {'python': ['trim_whitespace', 'autopep8']}
+" NerdTree setting
+map <f2> :NERDTreeToggle<CR>
 
 " airline and airline-theme
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'badcat'
+let g:airline_theme = 'bubblegum'
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
-" airline & ale
-let g:airline#extensions#ale#enabled = 1
-call airline#parts#define_function('ALE', 'ALEGetStatusLine')
-call airline#parts#define_condition('ALE', 'exists("*ALEGetStatusLine")')
-let g:airline_section_error = airline#section#create_right(['ALE'])
 
 " supertab setting
 let g:SuperTabDefaultCompletionType = "context"
-
-" jedi
-let g:pymode_rope = 0
-let g:jedi#auto_initialization = 0
-let g:jedi#use_splits_not_buffers = "right"
-autocmd FileType python setlocal completeopt-=preview
 
 " indent guides
 let g:indent_guides_enable_on_vim_startup = 1
@@ -186,3 +156,38 @@ let g:indent_guides_start_level = 4
 let g:indent_guides_guide_size = 1
 let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=lightgrey ctermbg=235
+
+" latex-preview settings
+let g:livepreview_engine = 'xelatex'
+let g:livepreview_cursorhold_recompile = 0
+let g:livepreview_previewer = 'open -a Preview'
+
+" rainbow parentheses
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+let g:rbpt_max = 16
+let g:rbpt_loadcmd_toggle = 0
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+" autopep8
+let g:autopep8_on_save = 1
+let g:autopep8_diff_type='vertical'
