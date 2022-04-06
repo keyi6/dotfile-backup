@@ -25,13 +25,11 @@ set termencoding=utf-8
 set fileformats=unix
 set history=50
 
-"let python_highlight_all=1
 syntax on
 filetype plugin on
 filetype indent on
 
 au VimEnter * highlight CursorLine cterm=NONE ctermbg=black ctermfg=NONE guibg=NONE guifg=NONE
-set pythonthreedll=/usr/local/Cellar/python/3.7.7/Frameworks/Python.framework/Versions/3.7/lib/libpython3.7.dylib
 
 "******************************  Shortcut  ****************************** 
 " text
@@ -188,6 +186,3 @@ au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
-" autopep8
-let g:autopep8_on_save = 1
-let g:autopep8_diff_type='vertical'
