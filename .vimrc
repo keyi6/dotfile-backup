@@ -47,7 +47,7 @@ func! CompileOrRun()
 	if &filetype == 'c'
 		exec "!g++ % -g -o %< -Wall"
 	elseif &filetype == 'cpp'
-		exec "!g++ % -g -o %< -Wall"
+		exec "!g++ % -g -o %< -Wall --std=c++11"
 	elseif &filetype == 'sh'
 		exec "!./%"
 	elseif &filetype == 'python'
