@@ -1,4 +1,4 @@
-colorscheme ron 
+olorscheme ron
 set hls
 set number
 set cindent
@@ -33,11 +33,7 @@ filetype indent on
 
 au VimEnter * highlight CursorLine cterm=NONE ctermbg=black ctermfg=NONE guibg=NONE guifg=NONE
 
-"******************************  Shortcut  ****************************** 
-" text
-map <C-A> ggVG
-vmap <C-C> :w !pbcopy <CR><CR>
-
+"******************************  Shortcut  ******************************
 " compile and run
 map <F9> : call CompileOrRun()<CR>
 map <F5> : ! time ./%< <CR>
@@ -52,11 +48,8 @@ func! CompileOrRun()
 		exec "!./%"
 	elseif &filetype == 'python'
 		exec "!python3 %"
-	elseif &filetype == 'php'
-		exec "!php %"
 	elseif &filetype == 'javascript'
 		exec "!node %"
-
 	endif
 endfunc
 
@@ -67,55 +60,19 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " move in INSERT mode
-imap <C-j> <Down> 
+imap <C-j> <Down>
 imap <C-k> <Up>
 imap <C-h> <Left>
 imap <C-l> <Right>
 
-"******************************  Header  ****************************** 
-au BufNewFile *.cpp exec ":call SetCpp()"
-au BufNewFile *.php exec ":call SetPhp()"
-au BufNewFile *.sh exec ":call SetSh()"
 
-func SetCpp()
-	let l = 0
-	let l = l + 1 | call setline(l, "#define PRON \"".expand("%<")."\"")
-	let l = l + 1 | call setline(l, "#include <cstdio>")
-	let l = l + 1 | call setline(l, "#include <vector>")
-	let l = l + 1 | call setline(l, "#include <string>")
-	let l = l + 1 | call setline(l, "#include <cstring>")
-	let l = l + 1 | call setline(l, "#include <iostream>")
-	let l = l + 1 | call setline(l, "#include <algorithm>")
-	let l = l + 1 | call setline(l, "using namespace std;")
-	let l = l + 1 | call setline(l, "typedef long long ll;")
-	let l = l + 1 | call setline(l, "")
-	let l = l + 1 | call setline(l, "")
-	let l = l + 1 | call setline(l, "int main() {")
-	let l = l + 1 | call setline(l, "#ifndef ONLINE_JUDGE")
-	let l = l + 1 | call setline(l, "    freopen(PRON \".in\", \"r\", stdin);")
-	let l = l + 1 | call setline(l, "    //freopen(PRON \".out\", \"w\", stdout);")
-	let l = l + 1 | call setline(l, "#endif")
-	let l = l + 1 | call setline(l, "")
-	let l = l + 1 | call setline(l, "}")
-	exec ":%retab!"
-	exec ":11"
-endfunc
-
-func SetPhp()
-	let l = 0
-	let l = l + 1 | call setline(l, "<?php")
-	let l = l + 1 | call setline(l, "")
-	let l = l + 1 | call setline(l, "?>")
-	exec ":%retab!"
-	exec ":2"
-endfunc
-
-func SetSh()
-	let l = 0
-	let l = l + 1 | call setline(l, "#!/bin/bash")
-endfunc
-
-
-"******************************  Plugin  ****************************** 
+"******************************  Plugin  ******************************
 " supertab setting
+" https://github.com/ervandew/supertab
 let g:SuperTabDefaultCompletionType = "context"
+
+" vim-oscyank setting
+" https://github.com/ojroques/vim-oscyank?tab=readme-ov-file
+let g:oscyank_term = 'iTerm2'
+nmap <C-c> <Plug>OSCYankOperator
+vmap <C-c> <Plug>OSCYankVisual
