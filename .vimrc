@@ -1,4 +1,5 @@
-olorscheme ron
+colorscheme afterglow
+
 set hls
 set number
 set cindent
@@ -76,3 +77,7 @@ let g:SuperTabDefaultCompletionType = "context"
 let g:oscyank_term = 'iTerm2'
 nmap <C-c> <Plug>OSCYankOperator
 vmap <C-c> <Plug>OSCYankVisual
+
+" airline setting
+let g:airline_theme='afterglow'
+
