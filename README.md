@@ -12,8 +12,10 @@ mkdir -p ~/.vim/pack/plugins/start
 git clone https://github.com/vim-airline/vim-airline ~/.vim/pack/dist/start/vim-airline
 # supertab plugin
 git clone --depth=1 https://github.com/ervandew/supertab.git ~/.vim/pack/plugins/start/supertab
-# vim-oscyank plugin
+# oscyank plugin
 git clone https://github.com/ojroques/vim-oscyank.git  ~/.vim/pack/plugins/start/vim-oscyank
+# afterglow theme
+git clone https://github.com/danilo-augusto/vim-afterglow.git  ~/.vim/pack/plugins/start/vim-afterglow
 ```
 
 See: [install powerline fonts](https://github.com/powerline/fonts)
