@@ -67,6 +67,14 @@ imap <C-h> <Left>
 imap <C-l> <Right>
 
 
+"******************************  Header  ****************************** 
+au BufNewFile *.sh exec ":call SetSh()"
+func SetSh()
+	let l = 0
+	let l = l + 1 | call setline(l, "#!/bin/bash")
+endfunc
+
+
 "******************************  Plugin  ******************************
 " supertab setting
 " https://github.com/ervandew/supertab
