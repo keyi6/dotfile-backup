@@ -1,5 +1,4 @@
 colorscheme afterglow
-
 set hls
 set number
 set cindent
@@ -32,7 +31,11 @@ syntax on
 filetype plugin on
 filetype indent on
 
+" auto exec cmd
 au VimEnter * highlight CursorLine cterm=NONE ctermbg=black ctermfg=NONE guibg=NONE guifg=NONE
+au VimEnter * highlight clear SpellBad | highlight SpellBad cterm=italic gui=italic
+au VimEnter * highlight clear SpellCap | highlight SpellCap cterm=italic gui=italic
+au VimEnter * highlight clear SpellLocal | highlight SpellLocal cterm=italic gui=italic
 
 "******************************  Shortcut  ******************************
 " compile and run
@@ -67,7 +70,7 @@ imap <C-h> <Left>
 imap <C-l> <Right>
 
 
-"******************************  Header  ****************************** 
+"******************************  Header  ******************************
 au BufNewFile *.sh exec ":call SetSh()"
 func SetSh()
 	let l = 0
@@ -77,7 +80,6 @@ endfunc
 
 "******************************  Plugin  ******************************
 " supertab setting
-" https://github.com/ervandew/supertab
 let g:SuperTabDefaultCompletionType = "context"
 
 " vim-oscyank setting
@@ -88,4 +90,3 @@ vmap <C-c> <Plug>OSCYankVisual
 
 " airline setting
 let g:airline_theme='afterglow'
-
