@@ -56,18 +56,24 @@ map <F5> : ! time ./%< <CR>
 
 func! CompileOrRun()
     exec "w"
+    let show_time_cmd = "!echo '\n\n\n============================ '`date` '============================' && "
     if &filetype == 'c'
-        exec "!g++ % -g -o %< -Wall"
+        exec  show_time_cmd . "g++ % -g -o %< -Wall"
     elseif &filetype == 'cpp'
-        exec "!g++ % -g -o %< -Wall"
+        exec show_time_cmd . "g++ % -g -o %< -Wall"
     elseif &filetype == 'sh'
-        exec "!./%"
+        exec show_time_cmd . "./%"
     elseif &filetype == 'python'
-        exec "!python3 %"
+        exec show_time_cmd . "python3 %"
     elseif &filetype == 'javascript'
-        exec "!node %"
+        exec show_time_cmd . "node %"
+    elseif &filetype == 'rust'
+        exec show_time_cmd . "cargo run %"
+    else
+        echo &filetype . " filetype is not supported"
     endif
 endfunc
+
 
 " move between windows
 map <C-j> <C-W>j
