@@ -14,8 +14,10 @@ git clone https://github.com/vim-airline/vim-airline ~/.vim/pack/dist/start/vim-
 git clone --depth=1 https://github.com/ervandew/supertab.git ~/.vim/pack/plugins/start/supertab
 # oscyank plugin
 git clone https://github.com/ojroques/vim-oscyank.git  ~/.vim/pack/plugins/start/vim-oscyank
-# afterglow theme
-git clone https://github.com/danilo-augusto/vim-afterglow.git  ~/.vim/pack/plugins/start/vim-afterglow
+
+# create dir for colors
+mkdir -p ~/.vim/colors
+git clone https://github.com/nanotech/jellybeans.vim.git  ~/.vim/colors/jellybeans.vim
 ```
 
 See: [install powerline fonts](https://github.com/powerline/fonts)
